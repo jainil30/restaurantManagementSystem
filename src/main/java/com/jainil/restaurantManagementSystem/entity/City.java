@@ -15,6 +15,7 @@ public class City {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cityId;
 
+    
     private String cityName;
     private String cityDescription;
 }
