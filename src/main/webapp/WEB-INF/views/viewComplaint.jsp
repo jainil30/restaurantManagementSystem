@@ -4,11 +4,11 @@
     <div class="card-body">
         <h5 class="card-title">Complaint Details</h5>
         <div class="btn-group" role="group" aria-label="City Actions">
-            <button type="button" class="btn btn-dark m-2">Copy</button>
-            <button type="button" class="btn btn-primary m-2">CSV</button>
-            <button type="button" class="btn btn-success m-2"  id="excelBtn">Excel</button>
-            <button type="button" class="btn btn-danger m-2" id="pdfBtn">PDF</button>
-            <button type="button" class="btn m-2">Print</button>
+          <button type="button" class="btn btn-dark m-2" id="copyBtn">Copy</button>
+          <button type="button" class="btn btn-primary m-2" id="csvBtn">CSV</button>
+          <button type="button" class="btn btn-success m-2"  id="excelBtn">Excel</button>
+          <button type="button" class="btn btn-danger m-2" id="pdfBtn">PDF</button>
+          <button type="button" class="btn m-2" id="printBtn">Print</button>
         </div>
         <div class="row justify-content-end"> <!-- Align items to the right -->
 
@@ -39,7 +39,7 @@
                         <td>${complaint.complaintDate}</td>
                         <td>${complaint.complaintReply}</td>
                         <td>${complaint.complaintReplyDate}</td>
-                        <td><a href="/viewComplaintAttachment/${complaint.complaintAttachmentUrl}" class="bi bi-link-45deg"></a></td>
+                        <td><a href="/admin/viewComplaintAttachment/${complaint.complaintAttachmentUrl}" class="bi bi-link-45deg"></a></td>
                         <td>
                             <c:choose>
                                 <c:when test="${complaint.complaintStatus eq 'RESOLVED'}">

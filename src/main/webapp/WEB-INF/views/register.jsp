@@ -18,6 +18,8 @@
             margin-top: 100px;
         }
     </style>
+    <%-- <script type="module" src="/js/Validator.js"></script> --%>
+
 </head>
 <body>
     <div class="container">
@@ -26,15 +28,21 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title text-center">Register Your Restaurant</h5>
-                        <form action="/registerRestaurant" method="post" id="registerRestaurant" onsubmit="return validateForm()">
+                        <form action="/registerRestaurant" method="post" id="registerRestaurant" class="needs-validation" onsubmit="return validateForm()" novalidate>
                             <div class="mb-3">
                                 <label for="restaurantName" class="form-label">Restaurant Name</label>
                                 <input type="text" class="form-control" id="restaurantName" name="restaurantName" required>
+                                <div class="invalid-feedback">
+                                    Please select a valid Name.
+                                </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col">
                                     <label for="email" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="email" name="restaurantEmail" required>
+                                    <input type="email" class="form-control" id="email" name="restaurantEmail" required data-email data-email-error="Email address is invalid." />
+                                    <div class="invalid-feedback">
+                                        Please select a valid email.
+                                    </div>
                                 </div>
                                 <div class="col">
                                     <label for="contactNo" class="form-label">Contact No</label>
@@ -70,21 +78,16 @@
                             </div>
                             <div class="mb-3">
                                 <label for="newPassword" class="form-label">New Password:</label>
-                                <input type="password" class="form-control" id="newPassword" name="restaurantPassword" required minlength="8">
-                                    <div class="invalid-feedback">
-                                        Minimum 8 letters
-                                    </div>
+                                <input type="password" class="form-control" id="newPassword" name="restaurantPassword"  minlength="8" placeholder="Password" required/>
+                                <div class="invalid-feedback"></div>
                             </div>
                             <div class="mb-3">
                                 <label for="confirmPassword" class="form-label">Confirm Password:</label>
-                                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required minlength="8">
-                                <div class="invalid-feedback">
-                                        Minimum 8 letters
-                                    </div>
+                                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" minlength="8" required data-match="#newPassword" data-match-error="Password and Confirm Password do not match" />
                             </div>
 
                             <div class="mb-3 text-center">
-                                <button type="submit" onclick="register()" class="btn btn-primary btn-block">Register</button>
+                                <button type="submit" id="registerBtn" class="btn btn-primary btn-block">Register</button>
                             </div>
                         </form>
                         <p class="text-center mt-3">Already Registered? <a href="/login">Login</a></p>
@@ -96,23 +99,30 @@
 
     <!-- Sweet alert ni link -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js" integrity="sha512-WMEKGZ7L5LWgaPeJtw9MBM4i5w5OSBlSjTjCtSnvFJGSVD26gE5+Td12qN5pvWXhuWaWcVwF++F7aqu9cvqP0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="/js/scripts.js"></script>
     <script>
-    function register() {
-            event.preventDefault();
-            var form = document.getElementById("registerRestaurant");
-          
 
+/*
+    var validator = new Validator(document.querySelector("registerRestaurant"), function(){
+        console.log("Validating form");
+    });
+    document.getElementById("registerBtn").addEventListener("click", function(event){
+            event.preventDefault();
+    
+            var form = document.getElementById("registerRestaurant");
+        
             Swal.fire({
                 title: "Good job!",
                 text: document.forms["registerRestaurant"]["restaurantName"].value + " is registered",
                 icon: "success"
             });
 
-              form.submit();
-    }
- 
-
+            form.submit();
+    }); 
+   
+*/
+/*
         function validateForm() {
             var username = document.getElementById('username').value;
             var email = document.getElementById('email').value;
@@ -138,7 +148,7 @@
 
             return true;
         }
-
+*/
         const parameters = window.location.search;
         const urlParams = new URLSearchParams(parameters);
         const error = urlParams.get("error");

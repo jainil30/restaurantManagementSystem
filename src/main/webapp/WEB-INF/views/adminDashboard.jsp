@@ -50,7 +50,7 @@
             <div class="border-end bg-white" id="sidebar-wrapper">
                 <div class="sidebar-heading border-bottom bg-light">Food Order</div>
                 <div class="list-group list-group-flush">
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3"><i class="bi bi-display m-2"></i>Dashboard </i></a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/admin/viewUserDetails"><i class="bi bi-display m-2"></i>Dashboard </i></a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/admin/viewCity"><i class="bi bi-building m-2"></i>Manage City </a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/admin/viewArea"><i class="bi bi-geo-alt-fill m-2"></i>Manage Area</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/admin/viewCategory"><i class="bi bi-cup-fill m-2"></i>Manage Category </a>
@@ -95,10 +95,11 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Scripts -->
         
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
-        <script type="text/javascript" src="tableExport.min.js"></script>
+        <%-- <script type="text/javascript" src="tableExport.min.js"></script> --%>
 
         <%-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> --%>
         <script lang="javascript" src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
@@ -108,8 +109,11 @@
         <%-- excel mate --%>
         <script src="/js/FileSaver.js"></script>
         <script src="/js/jstable.js"></script>
-        
-        <script src="/js/scripts.js"></script>
+        <script src="/js/scripts.js" defer></script>
+        <script>
+
+
+        </script>
 
     </body>
 </html>

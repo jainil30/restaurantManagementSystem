@@ -4,11 +4,11 @@
     <div class="card-body">
         <h5 class="card-title">Product Details</h5>
         <div class="btn-group" role="group" aria-label="City Actions">
-            <button type="button" class="btn btn-dark m-2" >Copy</button>
-            <button type="button" class="btn btn-primary m-2">CSV</button>
-            <button type="button" class="btn btn-success m-2" id="excelBtn">Excel</button>
-            <button type="button" class="btn btn-danger m-2" id="pdfBtn">PDF</button>
-            <button type="button" class="btn m-2">Print</button>
+          <button type="button" class="btn btn-dark m-2" id="copyBtn">Copy</button>
+          <button type="button" class="btn btn-primary m-2" id="csvBtn">CSV</button>
+          <button type="button" class="btn btn-success m-2"  id="excelBtn">Excel</button>
+          <button type="button" class="btn btn-danger m-2" id="pdfBtn">PDF</button>
+          <button type="button" class="btn m-2" id="printBtn">Print</button>
         </div>
         <div class="row justify-content-end"> <!-- Align items to the right -->
             <div class="col col-md-2">
@@ -35,7 +35,7 @@
                         <td>${product.productCategoryName}</td>
                         <td>${product.productSubCategoryName}</td>
                         <td>${product.productName}</td>
-                        <td style="text-align: center;"><a href="/viewProductImage/${product.productImageUrl}" class="bi bi-eye-fill" ></a></td>
+                        <td style="text-align: center;"><a href="/restaurant/viewProductImage/${product.productImageUrl}" class="bi bi-eye-fill" ></a></td>
                         <td>${product.productPrice}</td>
                         <td>${product.productDescription}</td>
                         <td>

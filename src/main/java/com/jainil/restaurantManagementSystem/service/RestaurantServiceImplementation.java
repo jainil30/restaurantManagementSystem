@@ -30,4 +30,11 @@ public class RestaurantServiceImplementation implements RestaurantService {
     public List<Restaurant> fetchAllRestaurants() {
         return this.restaurantRepository.findAll();
     }
+
+    @Override
+    public List<Restaurant> fetchRestaurantsByRole(Role role) {
+        return this.restaurantRepository.findByRole(role);
+    }
+
+
 }

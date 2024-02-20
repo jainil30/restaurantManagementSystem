@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -30,13 +31,14 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         System.out.println("entered filterchain ");
         httpSecurity
-                .csrf(t->t.disable())
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
                     authorizationManagerRequestMatcherRegistry
                             .requestMatchers("/admin/**").hasRole("ADMIN")
                             .requestMatchers("/restaurant/**").hasRole("RESTAURANT")
                             .requestMatchers("/login").permitAll()
                             .requestMatchers("/register").permitAll()
+                            .requestMatchers("/**").permitAll()
                             .anyRequest().authenticated();
 
                 }).formLogin(httpSecurityFormLoginConfigurer -> {
@@ -56,6 +58,7 @@ public class SecurityConfig {
                                 return;
                             }
                         }
+
                     }).failureUrl("/login?error=true");
                 });
 
@@ -68,7 +71,6 @@ public class SecurityConfig {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         authenticationProvider.setUserDetailsService(restaurantDetailService);
-
         return authenticationProvider;
     }
 

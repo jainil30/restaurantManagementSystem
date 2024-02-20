@@ -8,18 +8,26 @@ import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/restaurant")
@@ -95,10 +103,10 @@ public class RestaurantController {
         return "addComplaint";
     }
 
-    @GetMapping("/viewProducts")
-    public String showComplaints(){
-        return "viewProduct";
-    }
+//    @GetMapping("/viewProducts")
+//    public String showComplaints(){
+//        return "viewProduct";
+//    }
 
     @GetMapping("/viewOffers")
     public String showOffers(Model model,HttpSession httpSession){
@@ -114,12 +122,30 @@ public class RestaurantController {
         return "viewOrder";
     }
 
-    @GetMapping("/viewProductImage/{productImageUrl}")
-    public String showProductImage(@PathVariable String productImageUrl,Model model){
+    @GetMapping("/viewProductImage/{filename:.+}")
+    public ResponseEntity<Resource> showProductImage(@PathVariable String filename) throws MalformedURLException, FileNotFoundException {
         LOGGER.info("showProductImage() called");
-        model.addAttribute("imageUrl",productImageUrl);
-        return "viewImage";
+
+        Path file = Paths.get(UPLOAD_DIRECTORY_IMAGES).resolve(filename).normalize();
+        Resource resource = new UrlResource(file.toUri());
+
+
+        if (!resource.exists()) {
+            throw new FileNotFoundException("File not found: " + filename);
+        }
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_PNG) // Adjust content type based on your image type
+                .body(resource);
     }
+
+//    @GetMapping("/viewProductImage/{productImageUrl}")
+//    public String showProductImage(@PathVariable String productImageUrl,Model model){
+//        LOGGER.info("showProductImage() called");
+//        model.addAttribute("imageUrl",productImageUrl);
+//        System.out.println(productImageUrl);
+//        return "viewImage";
+//    }
 
     //Update GetMapping
     @GetMapping("/editOffer/{offerId}")
@@ -145,35 +171,68 @@ public class RestaurantController {
         return "editProduct";
     }
 
+    @GetMapping("/viewUserDetails")
+    public String showUserDetails(HttpSession httpSession,Model model){
+        Restaurant user = restaurantService.fetchByRestaurantEmail(httpSession.getAttribute("email").toString());
+        model.addAttribute("user",user);
+        return "viewUserDetails";
+    }
 
 
 
     // Post Mappings
     @PostMapping("/registerComplaint")
     public String registerComplaint(@ModelAttribute Complaint complaint, @RequestParam("file") MultipartFile file) throws IOException {
-        StringBuilder fileNames = new StringBuilder();
-        Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY_COMPLAINTS, file.getOriginalFilename());
-        fileNames.append(file.getOriginalFilename());
-        Files.write(fileNameAndPath, file.getBytes());
-        complaint.setComplaintAttachmentUrl(fileNameAndPath.toString());
+        if (!file.isEmpty()) {
+            String filename = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+
+            Path filePath = Paths.get(UPLOAD_DIRECTORY_COMPLAINTS).resolve(filename);
+
+            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+
+            complaint.setComplaintAttachmentUrl(filename);
+        }
+
         complaintService.saveComplaint(complaint);
 
-        return "redirect:/restaurant/restaurantDashboard";
+        return "redirect:/restaurant/restaurantDashboard?added=Complaint";
     }
 
-    @PostMapping("/saveProductData")
-    public String registerProduct(@ModelAttribute Product product, @RequestParam("file") MultipartFile file,HttpSession httpSession) throws IOException {
-        StringBuilder fileNames = new StringBuilder();
-        Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY_IMAGES, file.getOriginalFilename());
-        fileNames.append(file.getOriginalFilename());
-        Files.write(fileNameAndPath, file.getBytes());
+//    @PostMapping("/saveProductData")
+//    public String registerProduct(@ModelAttribute Product product, @RequestParam("file") MultipartFile file,HttpSession httpSession) throws IOException {
+//        StringBuilder fileNames = new StringBuilder();
+//        Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY_IMAGES, file.getOriginalFilename());
+//        fileNames.append(file.getOriginalFilename());
+//        Files.write(fileNameAndPath, file.getBytes());
+//
+//        product.setProductImageUrl(fileNameAndPath.toString());
+//        product.setProductRestaurant(httpSession.getAttribute("email").toString());
+//
+//        productService.saveProduct(product);
+//
+//        return "redirect:/restaurant/restaurantDashboard";
+//    }
 
-        product.setProductImageUrl(fileNameAndPath.toString());
+    @PostMapping("/saveProductData")
+    public String registerProduct(@ModelAttribute Product product, @RequestParam("file") MultipartFile file, HttpSession httpSession) throws IOException {
+
+        if (!file.isEmpty()) {
+            String filename = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+
+            Path filePath = Paths.get(UPLOAD_DIRECTORY_IMAGES).resolve(filename);
+
+            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+
+            product.setProductImageUrl(filename);
+        }
+
         product.setProductRestaurant(httpSession.getAttribute("email").toString());
 
         productService.saveProduct(product);
 
-        return "redirect:/restaurant/restaurantDashboard";
+        return "redirect:/restaurant/restaurantDashboard?added=Product";
     }
 
     @PostMapping("/saveOfferData")
@@ -186,7 +245,7 @@ public class RestaurantController {
 
         offerService.saveOffer(offer);
 
-        return "redirect:/restaurant/restaurantDashboard";
+        return "redirect:/restaurant/restaurantDashboard?added=Offer";
     }
 
     @PostMapping("/updateOfferData/{offerId}")
@@ -198,7 +257,7 @@ public class RestaurantController {
         System.out.println(offer.toString());
         offerService.updateOffer(Long.valueOf(offerId),offer);
 
-        return "redirect:/restaurant/restaurantDashboard";
+        return "redirect:/restaurant/restaurantDashboard?update=Offer";
     }
 
 
@@ -207,7 +266,7 @@ public class RestaurantController {
 
         offerService.deleteOffer(Long.valueOf(offerId));
 
-        return "redirect:/restaurant/restaurantDashboard";
+        return "redirect:/restaurant/restaurantDashboard?delete=Offer";
     }
 
     @GetMapping("/deleteProduct/{productId}")
@@ -215,7 +274,7 @@ public class RestaurantController {
 
         productService.deleteProduct(Long.valueOf(productId));
 
-        return "redirect:/restaurant/restaurantDashboard";
+        return "redirect:/restaurant/restaurantDashboard?delete=Offer";
     }
 
     @PostMapping("/updateProductData/{prdouctId}")
@@ -230,7 +289,7 @@ public class RestaurantController {
         productService.updateProduct(Long.valueOf(prdouctId), product);
 
 
-        return "redirect:/restaurant/restaurantDashboard";
+        return "redirect:/restaurant/restaurantDashboard?update=Product";
     }
 
 }

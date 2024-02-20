@@ -74,7 +74,9 @@ public class HomeController {
 
 
     @GetMapping("/logout")
-    public String logout(){
+    public String logout(HttpSession httpSession){
+        System.out.println("Logout User : " + httpSession.getAttribute("email"));
+        httpSession.invalidate();
         return "redirect:/login";
     }
 
@@ -90,11 +92,12 @@ public class HomeController {
         }else{
             restaurant.setRestaurantPassword(bCryptPasswordEncoder.encode(restaurant.getRestaurantPassword()));
             restaurantService.saveRestaurant(restaurant);
+
+            return "redirect:/login?registration=1";
         }
 
 
 
-        return "redirect:/login";
     }
 
 

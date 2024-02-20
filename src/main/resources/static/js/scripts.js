@@ -2,6 +2,47 @@
 
 document.addEventListener('DOMContentLoaded', function () {
 
+    const parameters = window.location.search;
+    const urlParams = new URLSearchParams(parameters);
+    const added = urlParams.get("added");
+
+    if (added) {
+        var addedMsg = "Saved " + added + " to Database";
+        Swal.fire({
+            title: "Good job!",
+            text: addedMsg,
+            icon: "success"
+        });
+    }
+
+    const update = urlParams.get("update");
+    if (update) {
+        var updateMsg = "Updated " + update + " to Database";
+        Swal.fire({
+            title: "Good job!",
+            text: updateMsg,
+            icon: "success"
+        });
+    }
+
+    const deleted = urlParams.get("delete");
+    if (deleted) {
+        var deleteMsg = "Deleted " + deleted + " to Database";
+        Swal.fire({
+            title: "Good job!",
+            text: deleteMsg,
+            icon: "success"
+        });
+    }
+    const logout = urlParams.get("logout");
+    if (logout) {
+        Swal.fire({
+            title: "Good job!",
+            text: "Logout",
+            icon: "success"
+        });
+    }
+
     const sidebarToggle = document.body.querySelector('#sidebarToggle');
     if (sidebarToggle) {
         sidebarToggle.addEventListener('click', event => {
@@ -35,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 
-    document.addEventListener("click", function(event) {
+    document.addEventListener("click", function (event) {
         if (event.target && event.target.id === "addBtn") {
             event.preventDefault();
 
@@ -53,66 +94,66 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-     document.addEventListener("click", function(event) {
-            if (event.target && event.target.matches("#viewTable #editBtn")) {
-                event.preventDefault();
-                var href = event.target.getAttribute('href');
+    document.addEventListener("click", function (event) {
+        if (event.target && event.target.matches("#viewTable #editBtn")) {
+            event.preventDefault();
+            var href = event.target.getAttribute('href');
 
-                fetch(href)
-                    .then(response => response.text())
-                    .then(html => {
-                        var dashboardContent = document.getElementById('page-content');
-                        dashboardContent.innerHTML = html;
-                    })
-                    .catch(error => {
-                        console.error('Error loading content:', error);
-                    });
-            }
+            fetch(href)
+                .then(response => response.text())
+                .then(html => {
+                    var dashboardContent = document.getElementById('page-content');
+                    dashboardContent.innerHTML = html;
+                })
+                .catch(error => {
+                    console.error('Error loading content:', error);
+                });
+        }
     });
 
 
 
-//    document.addEventListener("click", function(event) {
-//            if (event.target && event.target.id === "editBtn") {
-//                event.preventDefault();
-//
-//                var href = event.target.getAttribute('href');
-//
-//                fetch(href)
-//                    .then(response => response.text())
-//                    .then(html => {
-//                        var dashboardContent = document.getElementById('page-content');
-//                        dashboardContent.innerHTML = html;
-//                    })
-//                    .catch(error => {
-//                        console.error('Error loading content:', error);
-//                    });
-//            }
-//        });
+    //    document.addEventListener("click", function(event) {
+    //            if (event.target && event.target.id === "editBtn") {
+    //                event.preventDefault();
+    //
+    //                var href = event.target.getAttribute('href');
+    //
+    //                fetch(href)
+    //                    .then(response => response.text())
+    //                    .then(html => {
+    //                        var dashboardContent = document.getElementById('page-content');
+    //                        dashboardContent.innerHTML = html;
+    //                    })
+    //                    .catch(error => {
+    //                        console.error('Error loading content:', error);
+    //                    });
+    //            }
+    //        });
 
 
 
-//Selecting sidebar items based on the url
-// Parse URL parameters
-//    const urlParams = new URLSearchParams(window.location.search);
-//    const selectedSection = urlParams.get('selected');
-//
-//    // Select the appropriate sidebar item based on the parameter value
-//    const sidebarItems = document.querySelectorAll('.list-group-item-action');
-//    sidebarItems.forEach(function (item) {
-//        const href = item.getAttribute('href');
-//        console.log("href = " + href);
-//        console.log("passed reference" + ${selectedSection})
-//
-//        if (href === `/admin/${selectedSection}`) {
-//            item.classList.add('active'); // Apply styling to highlight the selected item
-//        }
-//    });
+    //Selecting sidebar items based on the url
+    // Parse URL parameters
+    //    const urlParams = new URLSearchParams(window.location.search);
+    //    const selectedSection = urlParams.get('selected');
+    //
+    //    // Select the appropriate sidebar item based on the parameter value
+    //    const sidebarItems = document.querySelectorAll('.list-group-item-action');
+    //    sidebarItems.forEach(function (item) {
+    //        const href = item.getAttribute('href');
+    //        console.log("href = " + href);
+    //        console.log("passed reference" + ${selectedSection})
+    //
+    //        if (href === `/admin/${selectedSection}`) {
+    //            item.classList.add('active'); // Apply styling to highlight the selected item
+    //        }
+    //    });
 
 });
 
 
-document.addEventListener("change", function(event) {
+document.addEventListener("change", function (event) {
     if (event.target && event.target.matches("#categorySelect")) {
         fetchSubCategories();
     }
@@ -152,7 +193,7 @@ function populateSubCategories(subCategories) {
     }
 }
 
-document.addEventListener("click", function(event) {
+document.addEventListener("click", function (event) {
     if (event.target && event.target.matches("#excelBtn")) {
         event.preventDefault();
         console.log("Excel button clicked")
@@ -177,7 +218,7 @@ function generateExcel() {
 }
 
 
-document.addEventListener("click", function(event) {
+document.addEventListener("click", function (event) {
     if (event.target && event.target.matches("#pdfBtn")) {
         event.preventDefault();
         console.log("PDF button clicked")
@@ -185,46 +226,134 @@ document.addEventListener("click", function(event) {
     }
 });
 
-
-function generatePdf(){
-  const table = document.getElementById("viewTable");
-
-//  // Create a new PDF document
-//  const doc = new jsPDF();
+//function generatePdf() {
+//    console.log("Generate PDF called")
+//    const table = document.getElementById("viewTable");
+//    const pageCount = jsTable.getPageCount(); // Assuming you have a method to get the total page count
 //
-//  // Add the table to the PDF
-//  doc.autoTable({
-//    html: table,
-//    startY: 20, // Adjust starting position as needed
-//  });
+//    let docDefinition = {
+//        content: []
+//    };
 //
-//  // Save the PDF
-//  doc.save("table.pdf");
+//    for (let i = 0; i < pageCount; i++) {
+//        jsTable.goToPage(i); // Go to each page of the table
+//        html2canvas($('#viewTable')[0]).then(function(canvas) {
+//            let imgData = canvas.toDataURL('image/png');
+//            docDefinition.content.push({ image: imgData, width: 500 });
+//
+//            // Check if it's the last page, then download the PDF
+//            if (i === pageCount - 1) {
+//                pdfMake.createPdf(docDefinition).download("pdfDoc.pdf");
+//            }
+//        });
+//    }
+//}
 
-//    const pdf = new jsPDF();
-//     const element = document.body;
-//
-//     pdf.html(element, {
-//      callback: function (pdf) {
-//
-//    // Save the PDF to a file or display it
-//       pdf.save("output.pdf");
-//      },
-//     });
 
-                html2canvas($('#viewTable')[0], {
-                onrendered: function (canvas) {
-                    var data = canvas.toDataURL();
-                    var docDefinition = {
-                        content: [{
-                            image: data,
-                            width: 500
-                        }]
-                    };
-                    pdfMake.createPdf(docDefinition).download("pdfDoc.pdf");
-                }
-            });
+function generatePdf() {
+    const table = document.getElementById("viewTable");
+
+    //  // Create a new PDF document
+    //  const doc = new jsPDF();
+    //
+    //  // Add the table to the PDF
+    //  doc.autoTable({
+    //    html: table,
+    //    startY: 20, // Adjust starting position as needed
+    //  });
+    //
+    //  // Save the PDF
+    //  doc.save("table.pdf");
+
+    //    const pdf = new jsPDF();
+    //     const element = document.body;
+    //
+    //     pdf.html(element, {
+    //      callback: function (pdf) {
+    //
+    //    // Save the PDF to a file or display it
+    //       pdf.save("output.pdf");
+    //      },
+    //     });
+
+    html2canvas($('#viewTable')[0], {
+        onrendered: function (canvas) {
+            var data = canvas.toDataURL();
+            var docDefinition = {
+                content: [{
+                    image: data,
+                    width: 500
+                }]
+            };
+            pdfMake.createPdf(docDefinition).download("pdfDoc.pdf");
+        }
+    });
 }
+
+document.addEventListener("click", function (event) {
+    if (event.target && event.target.matches("#printBtn")) {
+        event.preventDefault();
+        console.log("Print button clicked")
+        generatePrint();
+    }
+});
+
+
+
+function generatePrint() {
+    window.print();
+}
+
+
+document.addEventListener("click", function (event) {
+    if (event.target && event.target.matches("#copyBtn")) {
+        event.preventDefault();
+        console.log("copy button clicked")
+        copyTable();
+    }
+});
+
+function copyTable(el) {
+    // Select the table element
+    var table = document.getElementById("viewTable");
+
+    // Create a range object
+    var range = document.createRange();
+
+    // Select the table content
+    range.selectNode(table);
+
+    // Add the selected content to the clipboard
+    window.getSelection().addRange(range);
+
+    try {
+        // Execute the copy command
+        var successful = document.execCommand('copy');
+        var message = successful ? 'Table copied to clipboard' : 'Unable to copy table';
+        console.log(message);
+    } catch (err) {
+        console.error('Unable to copy table');
+    }
+
+    // Clear the selection
+    window.getSelection().removeAllRanges();
+}
+
+// function copyTable() {
+//     // var copyText = document.getElementById("viewTable");
+
+//     // copyText.select();
+//     // //  copyText.setSelectionRange(0, 99999);
+
+//     // navigator.clipboard.writeText(copyText.value);
+
+//     // alert("Copied the text: " + copyText.value);
+
+//     const element = document.querySelector('#viewTable');
+//     element.select();
+//     element.setSelectionRange(0, 99999);
+//     document.execCommand('copy');
+// }
 
 
 //
@@ -342,3 +471,70 @@ function generatePdf(){
 ////new JSTable("#citiesTable");
 ////new JSTable("#citiesTable");
 ////new JSTable("#viewRestaurantTable");
+
+
+document.addEventListener("click", function (event) {
+    if (event.target && event.target.matches("#csvBtn")) {
+        event.preventDefault();
+        console.log("csv button clicked")
+        tableToCSV();
+    }
+});
+
+
+function tableToCSV() {
+
+    let csv_data = [];
+
+
+    let table = document.getElementById('viewTable');
+
+
+    let rows = table.getElementsByTagName('tr');
+    for (let i = 0; i < rows.length; i++) {
+
+
+        let cols = rows[i].querySelectorAll('td,th');
+
+
+        let csvrow = [];
+        for (let j = 0; j < cols.length; j++) {
+
+
+            csvrow.push(cols[j].innerText);
+        }
+
+
+        csv_data.push(csvrow.join(","));
+    }
+
+
+    csv_data = csv_data.join('\n');
+
+
+    downloadCSVFile(csv_data);
+}
+
+
+function downloadCSVFile(csv_data) {
+
+    CSVFile = new Blob([csv_data], {
+        type: "text/csv"
+    });
+
+
+    let temp_link = document.createElement('a');
+
+
+    temp_link.download = "table.csv";
+    let url = window.URL.createObjectURL(CSVFile);
+    temp_link.href = url;
+
+
+    temp_link.style.display = "none";
+    document.body.appendChild(temp_link);
+
+
+    temp_link.click();
+    document.body.removeChild(temp_link);
+}

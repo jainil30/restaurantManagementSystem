@@ -1,20 +1,25 @@
 <%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <div class="card m-5">
     <div class="card-body">
         <h5 class="card-title">Offer Details</h5>
         <div class="btn-group" role="group" aria-label="City Actions">
-            <button type="button" class="btn btn-dark m-2">Copy</button>
-            <button type="button" class="btn btn-primary m-2">CSV</button>
-            <button type="button" class="btn btn-success m-2"  id="excelBtn">Excel</button>
-            <button type="button" class="btn btn-danger m-2" id="pdfBtn">PDF</button>
-            <button type="button" class="btn m-2">Print</button>
+          <button type="button" class="btn btn-dark m-2" id="copyBtn">Copy</button>
+          <button type="button" class="btn btn-primary m-2" id="csvBtn">CSV</button>
+          <button type="button" class="btn btn-success m-2"  id="excelBtn">Excel</button>
+          <button type="button" class="btn btn-danger m-2" id="pdfBtn">PDF</button>
+          <button type="button" class="btn m-2" id="printBtn">Print</button>
         </div>
-        <div class="row justify-content-end"> <!-- Align items to the right -->
+
+        <sec:authorize access="hasRole('ROLE_RESTAURANT')">
+        <div class="row justify-content-end" > <!-- Align items to the right -->
             <div class="col-md-2">
                 <a href="/restaurant/addOffer" id="addBtn" class="btn btn-primary m-2">Add Offer</a>
             </div>
         </div>
+         </sec:authorize>
         <table id="viewTable" class="table table-hover">
             <thead>
                 <tr>
@@ -25,7 +30,9 @@
                     <th>Product</th>
                     <th>Starts from </th>
                     <th>End </th>
+                    <sec:authorize access="hasRole('ROLE_RESTAURANT')">
                     <th>Action</th>
+                    </sec:authorize>
                 </tr>
             </thead>
             <tbody>
@@ -38,10 +45,12 @@
                         <td>${offer.offerCategoryName} - ${offer.offerSubCategoryName}</td>
                         <td>${offer.offerStartDate}</td>
                         <td>${offer.offerEndDate}</td>
+                        <sec:authorize access="hasRole('ROLE_RESTAURANT')">
                         <td>
                             <a class="btn btn-sm btn-outline-primary bi bi-pencil-fill" href="/restaurant/editOffer/${offer.offerId}" id="editBtn"></a>
                             <a class="btn btn-sm btn-outline-danger bi bi-trash-fill" href="/restaurant/deleteOffer/${offer.offerId}"></a>
                         </td>
+                        </sec:authorize>
                     </tr>                  
                 </c:forEach>
              </tbody>

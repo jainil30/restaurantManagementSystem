@@ -10,7 +10,8 @@
         body {
             background-image: url('/assets/background.jpg');
             background-size: cover;
-            background-position: center;
+            background-position: ;
+            background-repeat: no-repeat;
         }
         .card {
             margin-top: 100px;
@@ -51,6 +52,22 @@
             </div>
         </div>
     </div>
+    
+    <!-- Sweet alert ni link -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        const parameters = window.location.search;
+        const urlParams = new URLSearchParams(parameters);
+        const error = urlParams.get("registration");
+
+        if (error === "1") {
+            Swal.fire({
+                title: "Good job!",
+                text:  "Restaurant is registered",
+                icon: "success"
+            });
+        }
+    </script>
 </body>
 </html>
 
