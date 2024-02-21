@@ -13,12 +13,15 @@ import org.springframework.http.HttpRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.regex.Pattern;
 
 @Controller
 public class HomeController {
@@ -45,7 +48,7 @@ public class HomeController {
         LOGGER.info("showRegisterPage() Called");
         List<City> cityList = cityService.fetchAllCities();
         List<Area> areaList = areaService.fetchAllAreas();
-
+//        model.addAttribute("restaurant", new Restaurant());
         model.addAttribute("cities",cityList);
         model.addAttribute("areas",areaList);
 
@@ -81,23 +84,63 @@ public class HomeController {
     }
 
     @PostMapping("/registerRestaurant")
-    public String registerUser(@ModelAttribute Restaurant restaurant, @RequestParam("restaurantPassword") String restaurantPassword, @RequestParam("confirmPassword") String confirmPassword,Model model) {
+    public String registerUser(@ModelAttribute Restaurant restaurant, @RequestParam("restaurantPassword") String restaurantPassword, @RequestParam("confirmPassword") String confirmPassword, Model model) {  //, BindingResult bindingResult) {
 //        restaurant.setRole(Role.ROLE_RESTAURANT);
         System.out.println("Registering : " + restaurant.toString());
-        if(!restaurantPassword.equals(confirmPassword)){
-            System.out.println(restaurantPassword + " != "+ confirmPassword);
+        if (!restaurantPassword.equals(confirmPassword)) {
+            System.out.println(restaurantPassword + " != " + confirmPassword);
             System.out.println("new pass and conform pass does not match");
             model.addAttribute("errorMessage", "New passwords do not match.");
             return "redirect:/register?error=1";
-        }else{
+        } else {
+
+            if(Objects.nonNull(restaurant.getRestaurantEmail())){
+                System.out.println("Email --->  : " + restaurant.getRestaurantEmail());
+            }
+
+
+            if (!Objects.nonNull(restaurant.getRestaurantEmail()) || "".equals(restaurant.getRestaurantEmail())) {
+                return "redirect:/register?error=Email_cannot_be_empty";
+            }else {
+                if(Pattern.matches("/^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,})$/", restaurant.getRestaurantEmail())){
+                    return "redirect:/register?error=Email_cannot_be_empty";
+                }
+            }
+
+            if (!Objects.nonNull(restaurant.getRestaurantAddress()) || "".equals(restaurant.getRestaurantAddress())) {
+                return "redirect:/register?error=Address_cannot_be_empty";
+            }
+
+            if (!Objects.nonNull(restaurant.getRestaurantPassword()) || "".equals(restaurant.getRestaurantPassword())) {
+                return "redirect:/register?error=Password_cannot_be_empty";
+            }
+
+            if (!Objects.nonNull(restaurant.getRestaurantArea()) || "".equals(restaurant.getRestaurantArea())) {
+                return "redirect:/register?error=Area_cannot_be_empty";
+            }
+
+            if (!Objects.nonNull(restaurant.getRestaurantCity()) || "".equals(restaurant.getRestaurantCity())) {
+                return "redirect:/register?error=City_cannot_be_empty";
+            }
+
+            if (!Objects.nonNull(restaurant.getRestaurantName()) || "".equals(restaurant.getRestaurantName())) {
+                return "redirect:/register?error=Name_cannot_be_empty";
+            }else{
+                if(Pattern.matches("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}", restaurant.getRestaurantName())){
+                    return "redirect:/register?error=Restaurant_Name_cannot_be_empty";
+                }
+            }
+//        if(bindingResult.hasErrors()){
+//            System.out.println("has errors");
+//            bindingResult.getAllErrors().forEach(objectError -> System.out.println(objectError.toString()));
+//        }
+
+
             restaurant.setRestaurantPassword(bCryptPasswordEncoder.encode(restaurant.getRestaurantPassword()));
             restaurantService.saveRestaurant(restaurant);
 
             return "redirect:/login?registration=1";
         }
-
-
-
     }
 
 

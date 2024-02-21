@@ -14,6 +14,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,12 @@ import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.Principal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/admin")
@@ -94,6 +100,7 @@ public class AdminController {
         LOGGER.info("showComplaint() called");
         List<Complaint> complaintList = complaintService.fetchAllComplaints();
         model.addAttribute("complaints",complaintList);
+
         return "viewComplaint";
     }
 
@@ -114,8 +121,10 @@ public class AdminController {
     }
 
     @GetMapping("/viewUserDetails")
-    public String showUserDetails(HttpSession httpSession,Model model){
-        Restaurant user = restaurantService.fetchByRestaurantEmail(httpSession.getAttribute("email").toString());
+    public String showUserDetails(Model model, Principal principal){
+        System.out.println("principal.getName : "  + principal.getName());
+
+        Restaurant user = restaurantService.fetchByRestaurantEmail(principal.getName());
         model.addAttribute("user",user);
         return "viewUserDetails";
     }
@@ -241,11 +250,29 @@ public class AdminController {
         return "redirect:/admin/adminDashboard?delete=subCategory";
     }
 
+    @GetMapping("/showReply/{complaintId}")
+    public String showReplyPage(@PathVariable String complaintId, Model model){
+        Complaint complaint = complaintService.fetchComplaintById(Long.valueOf(complaintId));
+
+        model.addAttribute("complaint",complaint);
+
+        return "replyComplaint";
+
+    }
 
     //Post Mappings
     @PostMapping("/saveCityData")
     public String saveCityData(@ModelAttribute City city){
         LOGGER.info("saveCityDate() called");
+
+        if(!!Objects.nonNull(city.getCityName()) || "".equals(city.getCityName())){
+            System.out.println(city.toString());
+            return "redirect:/admin/adminDashboard?error=City_Name_Cannot_be_Empty";
+        }
+        if(!!Objects.nonNull(city.getCityDescription()) || "".equals(city.getCityDescription())){
+            return "redirect:/admin/adminDashboard?error=City_Description_Name_Cannot_be_Empty";
+        }
+
         cityService.saveCity(city);
 //       return "/adminDashboard?selected=viewCity";
         return "redirect:/admin/adminDashboard?added=city";
@@ -254,6 +281,20 @@ public class AdminController {
     @PostMapping("/saveAreaData")
     public String saveAreaData(@ModelAttribute Area area){
         LOGGER.info("saveCityDate() called");
+
+        if(!Objects.nonNull(area.getAreaCityName()) || "".equals(area.getAreaCityName())){
+            return "redirect:/admin/adminDashboard?error=Area_Name_Cannot_be_Empty";
+        }
+
+        if(!Objects.nonNull(area.getAreaName()) || "".equals(area.getAreaName())){
+            return "redirect:/admin/adminDashboard?error=Area_Description_Name_Cannot_be_Empty";
+        }
+
+        if(!Objects.nonNull(area.getAreaDescription()) || "".equals(area.getAreaDescription())){
+            return "redirect:/admin/adminDashboard?error=Area_Description_Name_Cannot_be_Empty";
+        }
+
+
         areaService.saveArea(area);
 //       return "/adminDashboard?selected=viewCity";
         return "redirect:/admin/adminDashboard?added=area";
@@ -262,6 +303,15 @@ public class AdminController {
     @PostMapping("/saveCategoryData")
     public String saveCategoryData(@ModelAttribute Category category){
         LOGGER.info("saveCategoryData() called");
+
+        if(!Objects.nonNull(category.getCategoryName()) || "".equals(category.getCategoryName())){
+            return "redirect:/admin/adminDashboard?error=Category_Name_Cannot_be_Empty";
+        }
+
+        if(!Objects.nonNull(category.getCategoryDescription()) || "".equals(category.getCategoryDescription())){
+            return "redirect:/admin/adminDashboard?error=Category_Description_Name_Cannot_be_Empty";
+        }
+
         categoryService.saveCategory(category);
         return "redirect:/admin/adminDashboard?added=category";
     }
@@ -269,6 +319,20 @@ public class AdminController {
     @PostMapping("/saveSubCategoryData")
     public String saveSubCategoryData(@ModelAttribute SubCategory subCategory){
         LOGGER.info("saveSubCategoryData() called");
+
+        if(!Objects.nonNull(subCategory.getSubCategoryName()) || "".equals(subCategory.getSubCategoryName())){
+            return "redirect:/admin/adminDashboard?error=Sub_Category_Name_Cannot_be_Empty";
+        }
+
+        if(!Objects.nonNull(subCategory.getSubCategoryCategoryName()) || "".equals(subCategory.getSubCategoryCategoryName())){
+            return "redirect:/admin/adminDashboard?error=Sub_Category_Category_Name_Cannot_be_Empty";
+        }
+
+
+        if(!Objects.nonNull(subCategory.getSubCategoryDescription()) || "".equals(subCategory.getSubCategoryDescription())){
+            return "redirect:/admin/adminDashboard?error=Sub_Category_Description_Name_Cannot_be_Empty";
+        }
+
         subCategoryService.saveSubCategory(subCategory);
         return "redirect:/admin/adminDashboard?added=subCategory";
     }
@@ -304,6 +368,25 @@ public class AdminController {
 
         subCategoryService.update(Long.valueOf(subCategoryId), subCategory);
 
-        return "redirect:/admin/adminDashboard?update=subCategory";
+        return "redirect:/admin/adminDashboard?update=Sub_Category";
     }
+
+    @PostMapping("/addReplyToComplaint/{complaintId}")
+    public String addComplaint(@RequestParam("complaintReply") String complaintReply,@PathVariable String complaintId) throws ParseException {
+        LOGGER.info("addComplaint() called");
+        Complaint complaint = complaintService.fetchComplaintById(Long.valueOf(complaintId));
+        System.out.println(complaint.toString());
+
+        if(complaintReply.equals("") || !Objects.nonNull(complaintReply)){
+           return "redirect:/admin/adminDashboard?error=Reply_cannot_be_empty";
+        }
+
+        complaint.setComplaintReply(complaintReply);
+        complaint.setComplaintStatus(ComplaintStatus.IN_PROGRESS);
+        System.out.println("dasfhadjkfadsfjhl");
+        System.out.println(complaint.toString());
+        complaintService.updateComplaint(complaint);
+        return "redirect:/admin/adminDashboard?added=Reply";
+    }
+
 }

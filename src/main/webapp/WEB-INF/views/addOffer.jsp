@@ -9,7 +9,7 @@
             <div class="mb-3 row">
                 <div class="col">
                     <label for="categorySelect" class="form-label">Category Name</label>
-                    <select class="form-select" id="categorySelect" name="offerCategoryName">
+                    <select class="form-select" id="categorySelect" name="offerCategoryName" required>
                         <c:forEach var="category" items="${categories}">
                             <option value="${category.categoryName}">${category.categoryName}</option>
                         </c:forEach>                   
@@ -17,7 +17,7 @@
                 </div>
                 <div class="col">
                     <label for="subcategorySelect" class="form-label">Subcategory Name</label>
-                    <select class="form-select" id="subcategorySelect" name="offerSubCategoryName">
+                    <select class="form-select" id="subcategorySelect" name="offerSubCategoryName" required>
                     </select>
                 </div>
             </div>

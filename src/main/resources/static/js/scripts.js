@@ -43,6 +43,21 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    const error = urlParams.get("error");
+    if (error) {
+        var errorMsg = urlParams.get("error");
+
+        if(error == "true"){
+            errorMsg = "Invalid email or password";
+        }
+
+        Swal.fire({
+            title: "Sorry!",
+            text: errorMsg,
+            icon: "error"
+        });
+    }
+
     const sidebarToggle = document.body.querySelector('#sidebarToggle');
     if (sidebarToggle) {
         sidebarToggle.addEventListener('click', event => {
@@ -65,6 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         console.log(pageUrl);
                         document.getElementById('page-content').innerHTML = xhr.responseText;
                         new JSTable("#viewTable");
+
                     } else {
                         console.error('Error loading page: ' + xhr.status);
                     }

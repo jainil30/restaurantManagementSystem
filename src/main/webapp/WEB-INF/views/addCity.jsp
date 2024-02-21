@@ -6,11 +6,11 @@
         <form id="form"  action="/admin/saveCityData" method="POST">
           <div class="mb-3">
               <label for="cityNameInput" class="form-label">City Name</label>
-              <input type="text" class="form-control" name="cityName" id="cityNameInput">
+              <input type="text" class="form-control" name="cityName" id="cityNameInput" required>
           </div>
           <div class="mb-3">
               <label for="cityDescriptionInput" class="form-label">City Description</label>
-              <input type="text" class="form-control" name="cityDescription" id="cityDescriptionInput">
+              <input type="text" class="form-control" name="cityDescription" id="cityDescriptionInput" required>
           </div>
           <button class="btn btn-primary float-end">Save</button>
       </form>

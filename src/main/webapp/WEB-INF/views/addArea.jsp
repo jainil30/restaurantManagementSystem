@@ -17,11 +17,11 @@
             </div>
             <div class="mb-3">
                 <label for="cityNameInput" class="form-label">Area Name</label>
-                <input type="text" class="form-control" name="areaName" id="cityNameInput">
+                <input type="text" class="form-control" name="areaName" id="cityNameInput" required>
             </div>
             <div class="mb-3">
                 <label for="cityDescriptionInput" class="form-label">Area Description</label>
-                <input type="text" class="form-control"  name="areaDescription" id="cityDescriptionInput">
+                <input type="text" class="form-control"  name="areaDescription" id="cityDescriptionInput" required>
             </div>
             <button class="btn btn-primary float-end">Save</button>
         </form>

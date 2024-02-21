@@ -8,4 +8,8 @@ public interface ComplaintService {
     List<Complaint> fetchAllComplaints();
 
     void saveComplaint(Complaint complaint);
+
+    Complaint fetchComplaintById(Long id);
+
+    void updateComplaint(Complaint complaint);
 }

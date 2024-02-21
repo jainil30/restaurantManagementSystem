@@ -27,4 +27,14 @@ public class ComplaintServiceImplementation implements ComplaintService{
         System.out.println(complaint.toString());
         this.complaintRepository.save(complaint);
     }
+
+    @Override
+    public Complaint fetchComplaintById(Long id) {
+        return this.complaintRepository.findById(id).get();
+    }
+
+    @Override
+    public void updateComplaint(Complaint complaint) {
+        this.complaintRepository.save(complaint);
+    }
 }

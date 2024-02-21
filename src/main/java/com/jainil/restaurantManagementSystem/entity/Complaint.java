@@ -36,7 +36,7 @@ public class Complaint {
 
     @PreUpdate
     protected void onUpdate() {
-        complaintDate = new Date();
+        complaintReplyDate = new Date();
     }
 
 }

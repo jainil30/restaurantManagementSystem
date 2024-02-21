@@ -26,7 +26,10 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Controller
@@ -194,6 +197,19 @@ public class RestaurantController {
             complaint.setComplaintAttachmentUrl(filename);
         }
 
+        if(!Objects.nonNull(complaint.getComplaintSubject()) ||"".equals(complaint.getComplaintSubject())){
+            return "redirect:/restaurant/restaurantDashboard?error=Complaint_Subject_cannot_be_empty";
+        }
+
+        if(!Objects.nonNull(complaint.getComplaintDescription()) ||"".equals(complaint.getComplaintDescription())){
+            return "redirect:/restaurant/restaurantDashboard?error=Complaint_Description_cannot_be_empty";
+        }
+
+        if(!Objects.nonNull(complaint.getComplaintAttachmentUrl()) ||"".equals(complaint.getComplaintAttachmentUrl())){
+            return "redirect:/restaurant/restaurantDashboard?error=Complaint_Attachment_cannot_be_empty";
+        }
+
+
         complaintService.saveComplaint(complaint);
 
         return "redirect:/restaurant/restaurantDashboard?added=Complaint";
@@ -228,6 +244,40 @@ public class RestaurantController {
             product.setProductImageUrl(filename);
         }
 
+        if(!Objects.nonNull(product.getProductName()) || "".equals(product.getProductName())){
+            return "redirect:/restaurant/restaurantDashboard?error=Product_Name_cannot_be_empty";
+        }
+
+        if(!Objects.nonNull(product.getProductDescription()) || "".equals(product.getProductDescription())){
+            return "redirect:/restaurant/restaurantDashboard?error=Product_Description_cannot_be_empty";
+        }
+
+        if(!Objects.nonNull(product.getProductPrice()) || "".equals(product.getProductPrice())){
+            return "redirect:/restaurant/restaurantDashboard?error=Product_Price_cannot_be_empty";
+        }
+
+        if(!Objects.nonNull(product.getProductCategoryName()) || "".equals(product.getProductCategoryName())){
+            return "redirect:/restaurant/restaurantDashboard?error=Product_Category_cannot_be_empty";
+        }
+
+        if(!Objects.nonNull(product.getProductSubCategoryName()) || "".equals(product.getProductSubCategoryName())){
+            return "redirect:/restaurant/restaurantDashboard?error=Product_Sub_Category_cannot_be_empty";
+        }
+
+        if(!Objects.nonNull(product.getProductPrice()) || "".equals(product.getProductPrice())){
+            return "redirect:/restaurant/restaurantDashboard?error=Product_Price_cannot_be_empty";
+        }
+
+        if(!Objects.nonNull(product.getProductImageUrl()) || "".equals(product.getProductImageUrl())){
+            return "redirect:/restaurant/restaurantDashboard?error=Product_Image_URL_cannot_be_empty";
+        }
+
+        if(!Objects.nonNull(product.getProductName()) || "".equals(product.getProductName())){
+            return "redirect:/restaurant/restaurantDashboard?error=Product_Name_cannot_be_empty";
+        }
+
+
+
         product.setProductRestaurant(httpSession.getAttribute("email").toString());
 
         productService.saveProduct(product);
@@ -243,6 +293,36 @@ public class RestaurantController {
         offer.setOfferRestaurant(httpSession.getAttribute("email").toString());
         System.out.println(offer.toString());
 
+
+        if(!Objects.nonNull(offer.getOfferName()) || "".equals(offer.getOfferName())){
+            return "redirect:/restaurant/restaurantDashboard?error=Offer_Name_cannot_be_empty";
+        }else if(!Objects.nonNull(offer.getOfferDescription()) || "".equals(offer.getOfferDescription())){
+            return "redirect:/restaurant/restaurantDashboard?error=Offer_Description_cannot_be_empty";
+        }else if(!Objects.nonNull(offer.getOfferDiscount()) || "".equals(offer.getOfferDiscount())){
+            return "redirect:/restaurant/restaurantDashboard?error=Offer_Discount_cannot_be_empty";
+        }
+
+        if(!Objects.nonNull(offer.getOfferCategoryName()) || "".equals(offer.getOfferCategoryName())){
+            return "redirect:/restaurant/restaurantDashboard?error=Offer_Category_cannot_be_empty";
+        }
+
+        if(!Objects.nonNull(offer.getOfferSubCategoryName()) || "".equals(offer.getOfferSubCategoryName())){
+            return "redirect:/restaurant/restaurantDashboard?error=Offer_Sub_Category_cannot_be_empty";
+        }
+
+        if(!Objects.nonNull(offer.getOfferStartDate()) || "".equals(offer.getOfferStartDate())){
+            return "redirect:/restaurant/restaurantDashboard?error=Offer_Start_Date_cannot_be_empty";
+        }
+
+
+        if(!Objects.nonNull(offer.getOfferEndDate()) || "".equals(offer.getOfferEndDate())){
+            return "redirect:/restaurant/restaurantDashboard?error=Offer_End_Date_cannot_be_empty";
+        }
+
+        if(offer.getOfferStartDate().after(new Date(String.valueOf(LocalDateTime.now()))) ){
+            return "redirect:/restaurant/restaurantDashboard?error=Offer_Start_Date_cannot_be_in_past";
+        }
+
         offerService.saveOffer(offer);
 
         return "redirect:/restaurant/restaurantDashboard?added=Offer";
@@ -253,7 +333,6 @@ public class RestaurantController {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
         offer.setOfferStartDate(dateFormat.parse(startDate));
         offer.setOfferEndDate(dateFormat.parse(endDate));
-
         System.out.println(offer.toString());
         offerService.updateOffer(Long.valueOf(offerId),offer);
 

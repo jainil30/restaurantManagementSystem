@@ -3,5 +3,6 @@ package com.jainil.restaurantManagementSystem.entity;
 public enum ComplaintStatus {
     RESOLVED,
     PENDING,
-    UNSOLVED
+    UNSOLVED,
+    IN_PROGRESS
 }

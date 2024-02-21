@@ -41,6 +41,12 @@
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+        <%-- DataTable ni --%>
+        <%-- <link rel="stylesheet" href="https://cdn.datatables.net/2.0.0/css/dataTables.bootstrap5.min.css"></link>
+        <link rel="stylesheet" href="https://cdn.datatables.net/autofill/2.7.0/css/autoFill.dataTables.min.css"></link>
+        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.0/css/buttons.dataTables.min.css"></link> --%>
 
     </head>
     <body>
@@ -58,7 +64,7 @@
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/admin/viewRestaurant"><i class="bi bi-magic m-2"></i>Manage Restaurant</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/admin/viewOffers"><i class="bi bi-handbag-fill m-2"></i>Manage Offers</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/admin/viewComplaint"><i class="bi bi-telephone-fill m-2"></i>Manage Complaint</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/logout"><i class="bi bi-box-arrow-right m-2"></i>Logout</a>
+                    <%-- <a class="list-group-item list-group-item-action list-group-item-light p-3" style="color=#7A70E8" href="/logout"><i class="bi bi-box-arrow-right m-2"></i>Logout</a> --%>
                 </div>
             </div>
             <!-- Page content wrapper-->
@@ -68,21 +74,21 @@
                     <div class="container-fluid">
                         <button class="btn" id="sidebarToggle"><i class="bi bi-list"></i></button>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                        <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
-                                <li class="nav-item active"><a class="nav-link" href="#!">Home</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#!">Link</a></li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                                <%-- <li class="nav-item active"><a class="nav-link" href="#!">Home</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#!">Link</a></li> --%>
+                                <li class="nav-item dropdown ">
+                                    <a class="nav-link dropdown-toggle bi bi-person-circle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="#!">Action</a>
-                                        <a class="dropdown-item" href="#!">Another action</a>
+                                        <%-- <a class="dropdown-item" href="#!">Action</a>
+                                        <a class="dropdown-item" href="#!">Another action</a> --%>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#!">Something else here</a>
+                                        <a class="dropdown-item" href="/logout">Logout</a>
                                     </div>
                                 </li>
                             </ul>
-                        </div> -->
+                        </div>
                     </div>
                 </nav>
                 <!-- Page content-->
@@ -91,8 +97,6 @@
                 </div>
             </div>
         </div>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Scripts -->
         
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -101,11 +105,20 @@
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
         <%-- <script type="text/javascript" src="tableExport.min.js"></script> --%>
 
-        <%-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> --%>
         <script lang="javascript" src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js" integrity="sha512-5yTVoG0jFRsDhgYEoKrZCj5Bazxqa0VnETLN7k0SazQcARBsbgrSb6um+YpzWKNKV2kjb8bhna4fDfOk3YPr4Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.0/jspdf.plugin.autotable.js" integrity="sha512-QbpHkTKy9ZZfLzC8t1TwPkopb6fQ0sq6FJ0RMpbjSz4Or53ohmZUE8Ri3JdQHCAiuw/UIYgA3XvgJ/WYcMwMMA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+        <%-- Datatable mate --%>
+<%--         
+        <script src="https://cdn.datatables.net/2.0.0/js/dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/2.0.0/js/dataTables.bootstrap5.min.js"></script>
+        <script src="https://cdn.datatables.net/autofill/2.7.0/js/dataTables.autoFill.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/3.0.0/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/3.0.0/js/buttons.print.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/3.0.0/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/3.0.0/js/buttons.colVis.min.js"></script>
+         --%>
         <%-- excel mate --%>
         <script src="/js/FileSaver.js"></script>
         <script src="/js/jstable.js"></script>

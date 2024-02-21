@@ -1,5 +1,6 @@
 <%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="springForm" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,10 +29,73 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title text-center">Register Your Restaurant</h5>
-                        <form action="/registerRestaurant" method="post" id="registerRestaurant" class="needs-validation" onsubmit="return validateForm()" novalidate>
+                        <%-- <springForm:form action="/registerRestaurant" method="POST" id="registerRestaurant" cssClass="needs-validation" modelAttribute="restaurant" novalidate="novalidate">
                             <div class="mb-3">
                                 <label for="restaurantName" class="form-label">Restaurant Name</label>
-                                <input type="text" class="form-control" id="restaurantName" name="restaurantName" required>
+                                <springForm:input path="restaurantName" cssClass="form-control" id="restaurantName" required="required"/>
+                                <div class="invalid-feedback">
+                                    Please select a valid Name.
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <label for="restaurantEmail" class="form-label">Email</label>
+                                    <springForm:input path="restaurantEmail" cssClass="form-control" id="restaurantEmail" required="required" data-email="data-email" data-email-error="Email address is invalid." />
+                                    <div class="invalid-feedback">
+                                        Please select a valid email.
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <label for="restaurantContactNo" class="form-label">Contact No</label>
+                                    <springForm:input path="restaurantContactNo" cssClass="form-control" id="restaurantContactNo" type="number" min="0000000000" max="9999999999" required="required"/>
+                                    <div class="invalid-feedback">
+                                        Please enter a valid contact number.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="restaurantAddress" class="form-label">Address</label>
+                                <springForm:input path="restaurantAddress" cssClass="form-control" id="restaurantAddress" required="required"/>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <label for="restaurantCity" class="form-label">City</label>
+                                    <springForm:select path="restaurantCity" cssClass="form-select" id="city" required="required">
+                                        <c:forEach var="city" items="${cities}">
+                                            <springForm:option value="${city.cityName}">${city.cityName}</springForm:option>
+                                        </c:forEach>
+                                    </springForm:select>
+                                </div>
+                                <div class="col">
+                                    <label for="restaurantArea" class="form-label">Area</label>
+                                    <springForm:select path="restaurantArea" cssClass="form-select" id="restaurantArea" required="required">
+                                        <c:forEach var="area" items="${areas}">
+                                            <c:if test="${area.areaCityName eq restaurantCity}">
+                                                <springForm:option value="${area.areaName}">${area.areaName}</springForm:option>
+                                            </c:if>
+                                        </c:forEach>
+                                    </springForm:select>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="restaurantPassword" class="form-label">New Password</label>
+                                <springForm:password path="restaurantPassword" cssClass="form-control" id="restaurantPassword" minlength="8" placeholder="Password" required="required"/>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="confirmPassword" class="form-label">Confirm Password</label>
+                                <input type="password" class="form-control" id="confirmPassword" minlength="8" required="required" data-match="#restaurantPassword" data-match-error="Password and Confirm Password do not match" />
+                                <div class="invalid-feedback"></div>
+                            </div>
+
+                            <div class="mb-3 text-center">
+                                <button type="submit" id="registerBtn" class="btn btn-primary btn-block">Register</button>
+                            </div>
+                        </springForm:form> --%>
+                       <form action="/registerRestaurant" method="post" id="registerRestaurant" class="needs-validation">
+                            <div class="mb-3">
+                                <label for="restaurantName" class="form-label">Restaurant Name</label>
+                                <input type="text" class="form-control" id="restaurantName" name="restaurantName" minlength="6" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 6 or more characters" required>
                                 <div class="invalid-feedback">
                                     Please select a valid Name.
                                 </div>
@@ -39,16 +103,16 @@
                             <div class="row mb-3">
                                 <div class="col">
                                     <label for="email" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="email" name="restaurantEmail" required data-email data-email-error="Email address is invalid." />
+                                    <input type="email" class="form-control" id="email" name="restaurantEmail" required data-email data-email-error="Email address is invalid." required/>
                                     <div class="invalid-feedback">
                                         Please select a valid email.
                                     </div>
                                 </div>
                                 <div class="col">
                                     <label for="contactNo" class="form-label">Contact No</label>
-                                    <input type="number" class="form-control"  min="0000000000" max="9999999999" id="contactNo" name="restaurantContactNo" required>
+                                    <input type="number" class="form-control"  min="1000000000" max="9999999999" id="contactNo" name="restaurantContactNo" required>
                                     <div class="invalid-feedback">
-                                        Please enter a valid contaxt number.
+                                        Please enter a valid contact number.
                                     </div>
                                 </div>
                             </div>
@@ -67,13 +131,13 @@
                                 </div>
                                 <div class="col">
                                     <label for="area" class="form-label">Area</label>
-                                    <select class="form-select" id="area" name="restaurantArea" required>
+                                    <select class="form-select" id="area" name="restaurantArea" required> 
                                         <%-- <c:forEach var="area" items="${areas}">
                                             <c:if test="${area.areaCityName eq restaurantCity}">
                                                 <option value="${area.areaName}">${area.areaName}</option>
                                             </c:if>
                                         </c:forEach> --%>
-                                    </select>
+                                </select>
                                 </div>
                             </div>
                             <div class="mb-3">
@@ -89,7 +153,7 @@
                             <div class="mb-3 text-center">
                                 <button type="submit" id="registerBtn" class="btn btn-primary btn-block">Register</button>
                             </div>
-                        </form>
+                        </form> 
                         <p class="text-center mt-3">Already Registered? <a href="/login">Login</a></p>
                     </div>
                 </div>
@@ -99,7 +163,7 @@
 
     <!-- Sweet alert ni link -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js" integrity="sha512-WMEKGZ7L5LWgaPeJtw9MBM4i5w5OSBlSjTjCtSnvFJGSVD26gE5+Td12qN5pvWXhuWaWcVwF++F7aqu9cvqP0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <%-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js" integrity="sha512-WMEKGZ7L5LWgaPeJtw9MBM4i5w5OSBlSjTjCtSnvFJGSVD26gE5+Td12qN5pvWXhuWaWcVwF++F7aqu9cvqP0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --%>
     <script src="/js/scripts.js"></script>
     <script>
 
