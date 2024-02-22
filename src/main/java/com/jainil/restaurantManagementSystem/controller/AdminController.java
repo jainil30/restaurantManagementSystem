@@ -265,11 +265,11 @@ public class AdminController {
     public String saveCityData(@ModelAttribute City city){
         LOGGER.info("saveCityDate() called");
 
-        if(!!Objects.nonNull(city.getCityName()) || "".equals(city.getCityName())){
+        if(!Objects.nonNull(city.getCityName()) || "".equals(city.getCityName())){
             System.out.println(city.toString());
             return "redirect:/admin/adminDashboard?error=City_Name_Cannot_be_Empty";
         }
-        if(!!Objects.nonNull(city.getCityDescription()) || "".equals(city.getCityDescription())){
+        if(!Objects.nonNull(city.getCityDescription()) || "".equals(city.getCityDescription())){
             return "redirect:/admin/adminDashboard?error=City_Description_Name_Cannot_be_Empty";
         }
 
@@ -380,12 +380,18 @@ public class AdminController {
         if(complaintReply.equals("") || !Objects.nonNull(complaintReply)){
            return "redirect:/admin/adminDashboard?error=Reply_cannot_be_empty";
         }
-
+        System.out.println("before setComplaintReply");
         complaint.setComplaintReply(complaintReply);
-        complaint.setComplaintStatus(ComplaintStatus.IN_PROGRESS);
-        System.out.println("dasfhadjkfadsfjhl");
-        System.out.println(complaint.toString());
-        complaintService.updateComplaint(complaint);
+
+        try{
+            System.out.println("before setComplaintStatus");
+            complaint.setComplaintStatus(ComplaintStatus.   IN_PROGRESS);
+            System.out.println(complaint.toString());
+            complaintService.updateComplaint(complaint);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         return "redirect:/admin/adminDashboard?added=Reply";
     }
 

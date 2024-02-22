@@ -18,7 +18,7 @@
         <table id="viewTable" class="table table-hover">
             <thead>
                 <tr>
-                    <th>No.</th>
+                    <!-- <th>No.</th> -->
                     <th>Category Name</th>
                     <th>Sub Category Name</th>
                     <th>Product Name</th>
@@ -31,7 +31,7 @@
             <tbody>
                 <c:forEach var="product" items="${products}">
                     <tr>
-                        <td>${product.productId}</td>
+                        <!-- <td>${product.productId}</td> -->
                         <td>${product.productCategoryName}</td>
                         <td>${product.productSubCategoryName}</td>
                         <td>${product.productName}</td>
@@ -40,7 +40,7 @@
                         <td>${product.productDescription}</td>
                         <td>
                             <a class="btn btn-sm btn-outline-primary bi bi-pencil-fill" href="/restaurant/editProduct/${product.productId}" id="editBtn"></a>
-                          <a class="btn btn-sm btn-outline-danger bi bi-trash-fill" href="/restaurant/deleteProduct/${product.productId}"></a>
+                          <a class="btn btn-sm btn-outline-danger bi bi-trash-fill" href="/restaurant/deleteProduct/${product.productId}" onclick="return confirm('Do you want to delete?');"></a>
                         </td>
                     </tr>                  
                 </c:forEach>

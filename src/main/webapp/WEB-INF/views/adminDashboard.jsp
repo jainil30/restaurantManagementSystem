@@ -64,7 +64,6 @@
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/admin/viewRestaurant"><i class="bi bi-magic m-2"></i>Manage Restaurant</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/admin/viewOffers"><i class="bi bi-handbag-fill m-2"></i>Manage Offers</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/admin/viewComplaint"><i class="bi bi-telephone-fill m-2"></i>Manage Complaint</a>
-                    <%-- <a class="list-group-item list-group-item-action list-group-item-light p-3" style="color=#7A70E8" href="/logout"><i class="bi bi-box-arrow-right m-2"></i>Logout</a> --%>
                 </div>
             </div>
             <!-- Page content wrapper-->
@@ -84,7 +83,7 @@
                                         <%-- <a class="dropdown-item" href="#!">Action</a>
                                         <a class="dropdown-item" href="#!">Another action</a> --%>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="/logout">Logout</a>
+                                        <a class="dropdown-item" href="/logout" onclick="return confirm('Do you want to really logout ? ');">Logout</a>
                                     </div>
                                 </li>
                             </ul>

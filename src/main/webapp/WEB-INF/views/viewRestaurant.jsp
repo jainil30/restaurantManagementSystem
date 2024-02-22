@@ -18,7 +18,7 @@
         <table id="viewTable" class="table table-hover">
             <thead>
                 <tr>
-                    <th>No.</th>
+                    <!-- <th>No.</th> -->
                     <th>City Name</th>
                     <th>Area Name</th>
                     <th>Restaurant Name</th>
@@ -29,7 +29,7 @@
                 <tbody>
                     <c:forEach var="restaurant" items="${restaurants}">
                         <tr>
-                            <td>${restaurant.restaurantId}</td>
+                            <!-- <td>${restaurant.restaurantId}</td> -->
                             <td>${restaurant.restaurantCity}</td>
                             <td>${restaurant.restaurantArea}</td>
                             <td>${restaurant.restaurantName}</td>

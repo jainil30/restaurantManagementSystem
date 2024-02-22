@@ -23,7 +23,7 @@
         <table id="viewTable" class="table table-hover">
             <thead>
                 <tr>
-                    <th>No.</th>
+                    <!-- <th>No.</th> -->
                     <th>Restaurant</th>
                     <th>Offer Name</th>
                     <th>Offer Discount</th>
@@ -38,7 +38,7 @@
             <tbody>
                 <c:forEach var="offer" items="${offers}">
                     <tr>
-                        <td>${offer.offerId}</td>
+                        <!-- <td>${offer.offerId}</td> -->
                         <td>${offer.offerRestaurant}</td>
                         <td>${offer.offerName}</td>
                         <td>${offer.offerDiscount}</td>
@@ -48,7 +48,7 @@
                         <sec:authorize access="hasRole('ROLE_RESTAURANT')">
                         <td>
                             <a class="btn btn-sm btn-outline-primary bi bi-pencil-fill" href="/restaurant/editOffer/${offer.offerId}" id="editBtn"></a>
-                            <a class="btn btn-sm btn-outline-danger bi bi-trash-fill" href="/restaurant/deleteOffer/${offer.offerId}"></a>
+                            <a class="btn btn-sm btn-outline-danger bi bi-trash-fill" href="/restaurant/deleteOffer/${offer.offerId}" onclick="return confirm('Do you want to delete?');"></a>
                         </td>
                         </sec:authorize>
                     </tr>                  

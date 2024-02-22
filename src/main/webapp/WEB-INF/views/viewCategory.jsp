@@ -22,7 +22,7 @@
      <table id="viewTable" class="table table-hover">
       <thead>
         <tr>
-            <th>No.</th>
+            <!-- <th>No.</th> -->
             <th>Category Name</th>
             <th>Category Description</th>
             <th>Action</th>
@@ -31,14 +31,14 @@
     <tbody>
       <c:forEach var="category" items="${categories}">
           <tr>
-              <td>${category.categoryId}</td>
+              <!-- <td>${category.categoryId}</td> -->
               <td>${category.categoryName}</td>
               <td>${category.categoryDescription}</td>
               <td>
                 <a class="btn btn-sm btn-outline-primary  bi bi-pencil-fill" id="editBtn" href="/admin/editCategoryData/${category.categoryId}">
 
                 </a>
-              <a class="btn btn-sm btn-outline-danger bi bi-trash-fill" href="/admin/deleteCategory/${category.categoryId}">
+              <a class="btn btn-sm btn-outline-danger bi bi-trash-fill" href="/admin/deleteCategory/${category.categoryId}" onclick="return confirm('Do you want to delete?');">
 
               </a>
               </td>

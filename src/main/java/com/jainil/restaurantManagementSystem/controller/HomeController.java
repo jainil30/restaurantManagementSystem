@@ -125,11 +125,12 @@ public class HomeController {
 
             if (!Objects.nonNull(restaurant.getRestaurantName()) || "".equals(restaurant.getRestaurantName())) {
                 return "redirect:/register?error=Name_cannot_be_empty";
-            }else{
-                if(Pattern.matches("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}", restaurant.getRestaurantName())){
-                    return "redirect:/register?error=Restaurant_Name_cannot_be_empty";
-                }
             }
+//            else{
+//                if(!Pattern.matches("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}", restaurant.getRestaurantName())){
+//                    return "redirect:/register?error=Restaurant_Name_cannot_be_empty";
+//                }
+//            }
 //        if(bindingResult.hasErrors()){
 //            System.out.println("has errors");
 //            bindingResult.getAllErrors().forEach(objectError -> System.out.println(objectError.toString()));

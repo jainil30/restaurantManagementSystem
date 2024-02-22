@@ -18,7 +18,7 @@
   <table id="viewTable" class="table table-hover">
       <thead>
         <tr>
-            <th>No.</th>
+            <!-- <th>No.</th> -->
             <th>City Name</th>
             <th>Area Name</th>
             <th>Area Description</th>
@@ -28,7 +28,7 @@
     <tbody>
       <c:forEach var="area" items="${areas}">
           <tr>
-              <td>${area.areaId}</td>
+              <!-- <td>${area.areaId}</td> -->
               <td>${area.areaCityName}</td>
               <td>${area.areaName}</td>
               <td>${area.areaDescription}</td>
@@ -36,7 +36,7 @@
                 <a class="btn btn-sm btn-outline-primary bi bi-pencil-fill" href="/admin/editArea/${area.areaId}" id="editBtn">
 
                 </a>
-              <a class="btn btn-sm btn-outline-danger bi bi-trash-fill" href="/admin/deleteArea/${area.areaId}">
+              <a class="btn btn-sm btn-outline-danger bi bi-trash-fill" href="/admin/deleteArea/${area.areaId}" onclick="return confirm('Do you want to delete?');">
    
               </a>
               </td>

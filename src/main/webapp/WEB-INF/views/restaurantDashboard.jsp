@@ -31,6 +31,8 @@
         }
         </style>
 
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
@@ -59,32 +61,31 @@
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/restaurant/viewOffers"><i class="bi bi-handbag-fill m-2"></i>Manage Offers</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/restaurant/viewOrder"><i class="bi bi-geo-alt-fill m-2"></i>Manage Orders</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/restaurant/complaints"><i class="bi bi-telephone-fill m-2"></i>Manage Complaint</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/logout"><i class="bi bi-box-arrow-right m-2"></i>Logout</a>
                 </div>
             </div>
          
             <div id="page-content-wrapper">
                 <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                    <div class="container-fluid">
-                        <button class="btn" id="sidebarToggle"><i class="bi bi-list"></i></button>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
-                                <%-- <li class="nav-item active"><a class="nav-link" href="#!">Home</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#!">Link</a></li> --%>
-                                <li class="nav-item dropdown ">
-                                    <a class="nav-link dropdown-toggle bi bi-person-circle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <%-- <a class="dropdown-item" href="#!">Action</a>
-                                        <a class="dropdown-item" href="#!">Another action</a> --%>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="/logout">Logout</a>
+                                    <div class="container-fluid">
+                                        <button class="btn" id="sidebarToggle"><i class="bi bi-list"></i></button>
+                                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                            <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                                                <%-- <li class="nav-item active"><a class="nav-link" href="#!">Home</a></li>
+                                                <li class="nav-item"><a class="nav-link" href="#!">Link</a></li> --%>
+                                                <li class="nav-item dropdown ">
+                                                    <a class="nav-link dropdown-toggle bi bi-person-circle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+                                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                                        <%-- <a class="dropdown-item" href="#!">Action</a>
+                                                        <a class="dropdown-item" href="#!">Another action</a> --%>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a class="dropdown-item" href="/logout" onclick="return confirm('Do you want to really logout?');">Logout</a>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
+                                </nav>
 
                 <div class="container-fluid" id="page-content">
     

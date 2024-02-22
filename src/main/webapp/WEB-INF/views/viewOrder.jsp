@@ -3,5 +3,6 @@
 <div class="card m-5">
     <div class="card-body">
         <h5 class="card-title">Order Details</h5>
+        <h2>Comming Soon...</h2>
     </div>
 </div>

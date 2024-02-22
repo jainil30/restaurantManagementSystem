@@ -29,6 +29,7 @@ public class Complaint {
 
     @Enumerated(EnumType.STRING)
     private ComplaintStatus complaintStatus;
+
     @PrePersist
     protected void onCreate() {
         complaintDate = new Date();

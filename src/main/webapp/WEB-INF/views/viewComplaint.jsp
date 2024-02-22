@@ -13,7 +13,7 @@
             <table id="viewTable" class="table table-hover">
             <thead>
                 <tr>
-                    <th>No.</th>
+                    <!-- <th>No.</th> -->
                     <th>Subject</th>
                     <th>Description</th>
                     <th>Complaint Date</th>
@@ -27,14 +27,14 @@
             <tbody>
                 <c:forEach var="complaint" items="${complaints}">
                     <tr>
-                        <td>${complaint.complaintId}</td>
+                        <!-- <td>${complaint.complaintId}</td> -->
                         <td>${complaint.complaintSubject}</td>
                         <td>${complaint.complaintDescription}</td>
                         <td>${complaint.complaintDate}</td>
                         <td>${complaint.complaintReply}</td>
                         <td><a href="/admin/showReply/${complaint.complaintId}" class="bi bi-reply-fill" id="addBtn"></a></td>
                         <td>${complaint.complaintReplyDate}</td>
-                        <td><a href="/admin/viewComplaintAttachment/${complaint.complaintAttachmentUrl}" class="bi bi-link-45deg"></a></td>
+                        <td><a href="/admin/viewComplaintAttachment/${complaint.complaintAttachmentUrl}" class="bi bi-link-45deg" ></a></td>
                         <td>
                             <c:choose>
                                 <c:when test="${complaint.complaintStatus eq 'IN_PROGRESS'}">

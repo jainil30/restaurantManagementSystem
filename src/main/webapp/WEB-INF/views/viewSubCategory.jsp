@@ -22,7 +22,7 @@
      <table id="viewTable" class="table table-hover">
       <thead>
         <tr>
-            <th>No.</th>
+            <!-- <th>No.</th> -->
             <th>Category Name</th>
             <th>Sub Category Name</th>
             <th> Sub Category Description</th>
@@ -32,7 +32,7 @@
     <tbody>
       <c:forEach var="subCategory" items="${subCategories}">
           <tr>
-              <td>${subCategory.subCategoryId}</td>
+              <!-- <td>${subCategory.subCategoryId}</td> -->
               <td>${subCategory.subCategoryName}</td>
               <td>${subCategory.subCategoryCategoryName}</td>
               <td>${subCategory.subCategoryDescription}</td>
@@ -40,7 +40,7 @@
                 <a class="btn btn-sm btn-outline-primary bi bi-pencil-fill" id="editBtn" href="/admin/editSubCategoryData/${subCategory.subCategoryId}">
  
                 </a>
-              <a class="btn btn-sm btn-outline-danger bi bi-trash-fill" href="/admin/deleteSubCategory/${subCategory.subCategoryId}">
+              <a class="btn btn-sm btn-outline-danger bi bi-trash-fill" href="/admin/deleteSubCategory/${subCategory.subCategoryId}" onclick="return confirm('Do you want to delete?');">
 
               </a>
               </td>

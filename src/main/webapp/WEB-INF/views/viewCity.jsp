@@ -22,7 +22,7 @@
        <table id="viewTable" class="table table-hover">
             <thead>
                 <tr>
-                    <th>No.</th>
+                    <!-- <th>No.</th> -->
                     <th>City Name</th>
                     <th>City Description</th>
                     <th>Action</th>
@@ -31,14 +31,14 @@
             <tbody>
                 <c:forEach var="city" items="${cities}">
                     <tr>
-                        <td>${city.cityId}</td>
+                        <!-- <td>${city.cityId}</td> -->
                         <td>${city.cityName}</td>
                         <td>${city.cityDescription}</td>
                         <td>
                             <a class="btn btn-sm btn-outline-primary bi bi-pencil-fill" id="editBtn" href="/admin/editCity/${city.cityId}">
           
                             </a>
-                          <a class="btn btn-sm btn-outline-danger bi bi-trash-fill" href="/admin/deleteCity/${city.cityId}">
+                          <a class="btn btn-sm btn-outline-danger bi bi-trash-fill" href="/admin/deleteCity/${city.cityId}" onclick="return confirm('Do you want to delete?');">
      
                           </a>
                         </td>

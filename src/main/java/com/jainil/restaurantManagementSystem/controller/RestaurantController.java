@@ -319,9 +319,9 @@ public class RestaurantController {
             return "redirect:/restaurant/restaurantDashboard?error=Offer_End_Date_cannot_be_empty";
         }
 
-        if(offer.getOfferStartDate().after(new Date(String.valueOf(LocalDateTime.now()))) ){
-            return "redirect:/restaurant/restaurantDashboard?error=Offer_Start_Date_cannot_be_in_past";
-        }
+//        if(offer.getOfferStartDate().after(new Date(String.valueOf(LocalDateTime.now()))) ){
+//            return "redirect:/restaurant/restaurantDashboard?error=Offer_Start_Date_cannot_be_in_past";
+//        }
 
         offerService.saveOffer(offer);
 

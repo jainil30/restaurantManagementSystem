@@ -17,7 +17,7 @@
                 </div>
                 <div class="col">
                     <label for="subcategorySelect" class="form-label">Subcategory Name</label>
-                    <select class="form-select" id="subcategorySelect" name="offerSubCategoryName" value="${offer.offerSubCategoryName}>
+                    <select class="form-select" id="subcategorySelect" name="offerSubCategoryName" value="${offer.offerSubCategoryName}>">
                     </select>
                 </div>
             </div>

@@ -32,7 +32,7 @@ public class Restaurant{
     private Role role;
 
 
-    @NotEmpty(message = "Contact number is mandatory")
+//    @NotEmpty(message = "Contact number is mandatory")
     @Digits(message = "10 Digits is must", integer = 10, fraction = 0)
     private Long restaurantContactNo;
 
